@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { KnucklebonesContext } from "../context/knucklebones";
 
-function Dice({onDiceClick, diceNumber, diceStatus, changeDiceStatus}){
+function Dice(){
+
+    const {onDiceClick,diceNumber, diceStatus, changeDiceStatus } = useContext(KnucklebonesContext);
 
     const throwDice =() => {
         if (!diceStatus){
