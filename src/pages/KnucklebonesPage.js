@@ -11,9 +11,9 @@ function KnucklebonesPage() {
     turn,
   } = useContext(KnucklebonesContext);
 
-  let whosNow = "Your Turn";
+  let whosNow = <div className="text-lime-400 m-auto">Your Turn</div>;
   if (!turn) {
-    whosNow = "Enemy Turn";
+    whosNow = <div className="text-red-500 m-auto">Enemy Turn</div>;
   }
   if (!gameStatus) {
     whosNow = "";
@@ -49,15 +49,15 @@ function KnucklebonesPage() {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="justify-center">{whosNow}</div>
-      <div className="">Enemy</div>
-      <div className="grid grid-cols-3 grid-rows-3 mt-5 mb-5">
+      <div className="m-auto">{whosNow}</div>
+      <div className="m-auto text-xl">Enemy</div>
+      <div className="grid grid-cols-3 grid-rows-3 m-auto mt-5 mb-5">
         {enemyFields}
       </div>
-      <div className="grid grid-cols-3 grid-rows-3 mt-5 mb-5">
+      <div className="grid grid-cols-3 grid-rows-3 m-auto mt-5 mb-5">
         {playerFields}
       </div>
-      <div className="">You</div>
+      <div className="m-auto text-xl">You</div>
     </div>
   );
 }
