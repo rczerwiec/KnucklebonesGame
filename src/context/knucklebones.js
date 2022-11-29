@@ -10,7 +10,7 @@ function Provider({children}){
     const [diceNumber, setDiceNumber] = useState(1);
     const [diceStatus, setDiceStatus] = useState(false);
     const [gameStatus, setGameStatus] = useState(true);
-
+    const [score, setScore] = useState();
     const [playerFieldsStatus, setPlayerFieldsStatus] = useState([
         null,
         null,
@@ -141,7 +141,6 @@ function Provider({children}){
             }
             //console.log("winnerScore",winnerScore)
         }
-        console.log(winnerScore);
         let losserScore = 0;
         for(let i=0; i<=2; i++){
             if(loser[0+i]===loser[3+i] && loser[6+i] === loser[3+i]){
@@ -163,7 +162,7 @@ function Provider({children}){
 
         }
         setGameStatus(!gameStatus);
-
+        setScore({winnerScore,losserScore});
     }
 
     const changeDiceStatus = () => {
@@ -194,6 +193,7 @@ function Provider({children}){
         setFieldStatus,
         playerFieldsStatus,
         enemyFieldsStatus,
+        score
     }}>
         {children}
     </KnucklebonesContext.Provider>

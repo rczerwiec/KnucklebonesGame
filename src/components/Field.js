@@ -10,14 +10,13 @@ import Six from '../static/svg/dice-six-faces-six.svg'
 function Field({fieldType,id,fields}) {
   const {turn,changeTurn,diceNumber,diceStatus, changeDiceStatus, setFieldStatus,gameStatus} = useContext(KnucklebonesContext);
   const setField = () => {
-    if(fieldType===turn && diceStatus && gameStatus){
+    if(fieldType===turn && diceStatus && gameStatus && fields[id]===null){
         //setFieldNumber(diceNumber)
         changeTurn();
         changeDiceStatus();
         setFieldStatus(fieldType,diceNumber,id);
     }
   };
-
 
   let dice = One
 

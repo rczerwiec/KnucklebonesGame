@@ -13,6 +13,7 @@ function App() {
     changeTurn,
     changeDiceStatus,
     changeGameStatus,
+    score
   } = useContext(KnucklebonesContext);
 
   const [gameStarted, setGameStarted] = useState(false);
@@ -30,7 +31,7 @@ function App() {
   if (gameStarted) {
     content = (
       <div className="grid gap-7">
-        {gameStatus ? <div></div> : <div>KONIEC</div>}
+        {gameStatus ? <div></div> : <div className="m-auto text-2xl">{score.winnerScore}-{score.losserScore}</div>}
         <KnucklebonesPage
           turn={turn}
           changeTurn={changeTurn}
