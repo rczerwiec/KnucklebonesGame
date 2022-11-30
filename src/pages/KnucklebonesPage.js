@@ -1,5 +1,4 @@
 import { useContext} from "react";
-
 import Field from "../components/Field";
 import { KnucklebonesContext } from "../context/knucklebones";
 
@@ -7,13 +6,13 @@ function KnucklebonesPage() {
   const {
     gameEnded,
     playerFieldsStatus,
-    enemyFieldsStatus,
+    player2FieldsStatus,
     turn,
   } = useContext(KnucklebonesContext);
 
-  let whosNow = <div className="text-lime-400 m-auto">Your Turn</div>;
+  let whosNow = <div className="text-lime-400 m-auto">Player 1 Turn</div>;
   if (!turn) {
-    whosNow = <div className="text-red-500 m-auto">Enemy Turn</div>;
+    whosNow = <div className="text-red-500 m-auto">Player 2 Turn</div>;
   }
   if (!gameEnded) {
     whosNow = "";
@@ -36,13 +35,13 @@ function KnucklebonesPage() {
   const enemyFields = Array(9)
     .fill()
     .map((_, index) => {
-      const id = "enemy" + index;
+      const id = "player2" + index;
       return (
         <Field
           key={id}
           id={index}
           fieldType={false}
-          fields={enemyFieldsStatus}
+          fields={player2FieldsStatus}
         ></Field>
       );
     });
@@ -50,14 +49,14 @@ function KnucklebonesPage() {
   return (
     <div className="flex flex-col justify-center">
       <div className="m-auto">{whosNow}</div>
-      <div className="m-auto text-xl">Enemy</div>
+      <div className="m-auto text-xl">Player 2</div>
       <div className="grid grid-cols-3 grid-rows-3 m-auto mt-5 mb-5">
         {enemyFields}
       </div>
       <div className="grid grid-cols-3 grid-rows-3 m-auto mt-5 mb-5">
         {playerFields}
       </div>
-      <div className="m-auto text-xl">You</div>
+      <div className="m-auto text-xl">Player 1</div>
     </div>
   );
 }

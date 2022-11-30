@@ -7,9 +7,20 @@ function Provider({ children }) {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(true);
   const [turn, setTurn] = useState(true);
-  const [score, setScore] = useState();
+  const [score, setScore] = useState({player1Score: 0, player2Score:0});
   const [diceNumber, setDiceNumber] = useState(1);
   const [diceStatus, setDiceStatus] = useState(false);
+  const [player2FieldsStatus, setPlayer2FieldsStatus] = useState([
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]);
   const [playerFieldsStatus, setPlayerFieldsStatus] = useState([
     null,
     null,
@@ -20,25 +31,16 @@ function Provider({ children }) {
     null,
     null,
     null,
-  ]);
-  const [enemyFieldsStatus, setEnemyFieldsStatus] = useState([
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ]);
+  ]);  
+
+
 
   const setFieldStatus = (type, number, id) => {
     if (type) {
-      let updatedEnemyField = [];
+      let updatedPlayer2Field = [];
       const updatedField = playerFieldsStatus.map((o, index) => {
         if (index === id) {
-          updatedEnemyField = enemyFieldsStatus.map((x, ind) => {
+            updatedPlayer2Field = player2FieldsStatus.map((x, ind) => {
             if (index === 6 || index === 3 || index === 0) {
               if (ind === 6 || ind === 3 || ind === 0) {
                 if (x === number) {
@@ -63,25 +65,23 @@ function Provider({ children }) {
           });
           return number;
         }
-
         return o;
       });
-      setEnemyFieldsStatus(updatedEnemyField);
+
+      setPlayer2FieldsStatus(updatedPlayer2Field);
       setPlayerFieldsStatus(updatedField);
-      const playerFieldsTaken = updatedEnemyField.filter(
+      const player2FieldsTaken = updatedField.filter(
         (x) => x != null
       ).length;
-      const enemyFieldsTaken = updatedField.filter((x) => x != null).length;
-      if (playerFieldsTaken === 9)
-      changeGameEnded(updatedEnemyField, updatedField);
-      if (enemyFieldsTaken === 9)
-      changeGameEnded(updatedField, updatedEnemyField);
+      if (player2FieldsTaken === 9)
+      changeGameEnded(updatedPlayer2Field, updatedField);
+
 
     } else {
-      let updatedEnemyField = [];
-      const updatedField = enemyFieldsStatus.map((o, index) => {
+      let updatedField = [];
+      const updatedPlayer2Field = player2FieldsStatus.map((o, index) => {
         if (index === id) {
-          updatedEnemyField = playerFieldsStatus.map((x, ind) => {
+            updatedField = playerFieldsStatus.map((x, ind) => {
             if (index === 6 || index === 3 || index === 0) {
               if (ind === 6 || ind === 3 || ind === 0) {
                 if (x === number) {
@@ -109,17 +109,13 @@ function Provider({ children }) {
 
         return o;
       });
-      setPlayerFieldsStatus(updatedEnemyField);
-      setEnemyFieldsStatus(updatedField);
-      const playerFieldsTaken = updatedEnemyField.filter(
-        (x) => x != null
-      ).length;
-      const enemyFieldsTaken = updatedField.filter((x) => x != null).length;
+      setPlayerFieldsStatus(updatedField);
+      setPlayer2FieldsStatus(updatedPlayer2Field);
 
-      if (playerFieldsTaken === 9)
-      changeGameEnded(updatedEnemyField, updatedField);
+      const enemyFieldsTaken = updatedPlayer2Field.filter((x) => x != null).length;
+
       if (enemyFieldsTaken === 9)
-      changeGameEnded(updatedField, updatedEnemyField);
+      changeGameEnded(updatedPlayer2Field,updatedField);
     }
   };
 
@@ -132,38 +128,38 @@ function Provider({ children }) {
     setGameEnded(!gameEnded);
   };
 
-  const calculateScores = (winner, loser) => {
-    let winnerScore = 0;
+  const calculateScores = (player2, player1) => {
+    let player2Score = 0;
     for (let i = 0; i <= 2; i++) {
-      if (winner[0 + i] === winner[3 + i] && winner[6 + i] === winner[3 + i]) {
-        winnerScore = winnerScore + winner[0 + i] * 3 * 3;
-      } else if (winner[0 + i] === winner[3 + i] && winner[0 + i] !== null) {
-        winnerScore = winnerScore + winner[0 + i] * 2 * 2 + winner[6 + 1];
-      } else if (winner[3 + i] === winner[6 + i] && winner[3 + i] !== null) {
-        winnerScore = winnerScore + winner[3 + i] * 2 * 2 + winner[0 + 1];
-      } else if (winner[6 + i] === winner[0 + i] && winner[6 + i] !== null) {
-        winnerScore = winnerScore + winner[6 + i] * 2 * 2 + winner[3 + 1];
+      if (player2[0 + i] === player2[3 + i] && player2[6 + i] === player2[3 + i]) {
+        player2Score = player2Score + player2[0 + i] * 3 * 3;
+      } else if (player2[0 + i] === player2[3 + i] && player2[0 + i] !== null) {
+        player2Score = player2Score + player2[0 + i] * 2 * 2 + player2[6 + 1];
+      } else if (player2[3 + i] === player2[6 + i] && player2[3 + i] !== null) {
+        player2Score = player2Score + player2[3 + i] * 2 * 2 + player2[0 + 1];
+      } else if (player2[6 + i] === player2[0 + i] && player2[6 + i] !== null) {
+        player2Score = player2Score + player2[6 + i] * 2 * 2 + player2[3 + 1];
       } else {
-        winnerScore =
-          winnerScore + winner[0 + i] + winner[3 + i] + winner[6 + i];
+        player2Score =
+        player2Score + player2[0 + i] + player2[3 + i] + player2[6 + i];
       }
       //console.log("winnerScore",winnerScore)
     }
-    let loserScore = 0;
+    let player1Score = 0;
     for (let i = 0; i <= 2; i++) {
-      if (loser[0 + i] === loser[3 + i] && loser[6 + i] === loser[3 + i]) {
-        loserScore = loserScore + loser[0 + i] * 3 * 3;
-      } else if (loser[0 + i] === loser[3 + i] && loser[0 + i] !== null) {
-        loserScore = loserScore + loser[0 + i] * 2 * 2 + loser[6 + 1];
-      } else if (loser[3 + i] === loser[6 + i] && loser[3 + i] !== null) {
-        loserScore = loserScore + loser[3 + i] * 2 * 2 + loser[0 + 1];
-      } else if (loser[6 + i] === loser[0 + i] && loser[6 + i] !== null) {
-        loserScore = loserScore + loser[6 + i] * 2 * 2 + loser[3 + 1];
+      if (player1[0 + i] === player1[3 + i] && player1[6 + i] === player1[3 + i]) {
+        player1Score = player1Score + player1[0 + i] * 3 * 3;
+      } else if (player1[0 + i] === player1[3 + i] && player1[0 + i] !== null) {
+        player1Score = player1Score + player1[0 + i] * 2 * 2 + player1[6 + 1];
+      } else if (player1[3 + i] === player1[6 + i] && player1[3 + i] !== null) {
+        player1Score = player1Score + player1[3 + i] * 2 * 2 + player1[0 + 1];
+      } else if (player1[6 + i] === player1[0 + i] && player1[6 + i] !== null) {
+        player1Score = player1Score + player1[6 + i] * 2 * 2 + player1[3 + 1];
       } else {
-        loserScore = loserScore + loser[0 + i] + loser[3 + i] + loser[6 + i];
+        player1Score = player1Score + player1[0 + i] + player1[3 + i] + player1[6 + i];
       }
     }
-    setScore({ winnerScore, loserScore });
+    setScore({ player2Score, player1Score });
   }
 
   const changeDiceStatus = () => {
@@ -192,10 +188,10 @@ function Provider({ children }) {
         diceStatus,
         turn,
         gameEnded,
-        playerFieldsStatus,
-        enemyFieldsStatus,
-        score,
         gameStarted,
+        playerFieldsStatus,
+        player2FieldsStatus,
+        score,
       }}
     >
       {children}
