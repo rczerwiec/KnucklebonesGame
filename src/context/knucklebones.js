@@ -4,12 +4,12 @@ import { createContext } from "react";
 const KnucklebonesContext = createContext();
 
 function Provider({ children }) {
-  const [gameStarted, setGameStarted] = useState(false);
-  const [gameEnded, setGameEnded] = useState(true);
-  const [turn, setTurn] = useState(true);
-  const [score, setScore] = useState({player1Score: 0, player2Score:0});
-  const [diceNumber, setDiceNumber] = useState(1);
-  const [diceStatus, setDiceStatus] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false); //game started or not
+  const [gameEnded, setGameEnded] = useState(true); //game ended or not
+  const [turn, setTurn] = useState(true); //player1 turn or player2
+  const [score, setScore] = useState({player1Score: 0, player2Score:0}); //state for scores
+  const [diceNumber, setDiceNumber] = useState(1); //number on throwed dice
+  const [diceStatus, setDiceStatus] = useState(false); //status of dice
   const [player2FieldsStatus, setPlayer2FieldsStatus] = useState([
     null,
     null,
@@ -20,7 +20,7 @@ function Provider({ children }) {
     null,
     null,
     null,
-  ]);
+  ]); //player 2 fields status
   const [playerFieldsStatus, setPlayerFieldsStatus] = useState([
     null,
     null,
@@ -31,10 +31,9 @@ function Provider({ children }) {
     null,
     null,
     null,
-  ]);  
+  ]);  //player 1 fields status
 
-
-
+  //Check every player1 and player2 fields after putting a dice on field, calculate all options
   const setFieldStatus = (type, number, id) => {
     if (type) {
       let updatedPlayer2Field = [];
@@ -119,58 +118,53 @@ function Provider({ children }) {
     }
   };
 
+  //Change gameStarted status to true
   const changeGameStarted = () => {
     setGameStarted(!gameStarted);
   };
 
-  const changeGameEnded = (winner, loser) => {
-    calculateScores(winner, loser)
+  //Change gameEnded status to false and calculate the scores
+  const changeGameEnded = (player2, player1) => {
+    let player2Score = calculateScore(player2);
+    let player1Score = calculateScore(player1);
+
+    setScore({ player2Score, player1Score });
     setGameEnded(!gameEnded);
   };
 
-  const calculateScores = (player2, player1) => {
-    let player2Score = 0;
+  //Score calculation function
+  const calculateScore = (player) =>{
+    let playerScore = 0;
     for (let i = 0; i <= 2; i++) {
-      if (player2[0 + i] === player2[3 + i] && player2[6 + i] === player2[3 + i]) {
-        player2Score = player2Score + player2[0 + i] * 3 * 3;
-      } else if (player2[0 + i] === player2[3 + i] && player2[0 + i] !== null) {
-        player2Score = player2Score + player2[0 + i] * 2 * 2 + player2[6 + 1];
-      } else if (player2[3 + i] === player2[6 + i] && player2[3 + i] !== null) {
-        player2Score = player2Score + player2[3 + i] * 2 * 2 + player2[0 + 1];
-      } else if (player2[6 + i] === player2[0 + i] && player2[6 + i] !== null) {
-        player2Score = player2Score + player2[6 + i] * 2 * 2 + player2[3 + 1];
+      if (player[0 + i] === player[3 + i] && player[6 + i] === player[3 + i]) {
+        playerScore = playerScore + player[0 + i] * 3 * 3;
+      } else if (player[0 + i] === player[3 + i] && player[0 + i] !== null) {
+        playerScore = playerScore + player[0 + i] * 2 * 2 + player[6 + 1];
+      } else if (player[3 + i] === player[6 + i] && player[3 + i] !== null) {
+        playerScore = playerScore + player[3 + i] * 2 * 2 + player[0 + 1];
+      } else if (player[6 + i] === player[0 + i] && player[6 + i] !== null) {
+        playerScore = playerScore + player[6 + i] * 2 * 2 + player[3 + 1];
       } else {
-        player2Score =
-        player2Score + player2[0 + i] + player2[3 + i] + player2[6 + i];
-      }
-      //console.log("winnerScore",winnerScore)
-    }
-    let player1Score = 0;
-    for (let i = 0; i <= 2; i++) {
-      if (player1[0 + i] === player1[3 + i] && player1[6 + i] === player1[3 + i]) {
-        player1Score = player1Score + player1[0 + i] * 3 * 3;
-      } else if (player1[0 + i] === player1[3 + i] && player1[0 + i] !== null) {
-        player1Score = player1Score + player1[0 + i] * 2 * 2 + player1[6 + 1];
-      } else if (player1[3 + i] === player1[6 + i] && player1[3 + i] !== null) {
-        player1Score = player1Score + player1[3 + i] * 2 * 2 + player1[0 + 1];
-      } else if (player1[6 + i] === player1[0 + i] && player1[6 + i] !== null) {
-        player1Score = player1Score + player1[6 + i] * 2 * 2 + player1[3 + 1];
-      } else {
-        player1Score = player1Score + player1[0 + i] + player1[3 + i] + player1[6 + i];
+        playerScore = playerScore + player[0 + i] + player[3 + i] + player[6 + i];
       }
     }
-    setScore({ player2Score, player1Score });
+
+    return playerScore
   }
 
+  //Dice status - dice is throwed or not
   const changeDiceStatus = () => {
     setDiceStatus(!diceStatus);
   };
+
+  //Generate Dice Number 1-6
   const onDiceClick = () => {
     const random = Math.floor(Math.random() * 6) + 1;
 
     setDiceNumber(random);
   };
 
+  //change turn from player1 to player2 and vice versa
   const changeTurn = () => {
     setTurn(!turn);
   };

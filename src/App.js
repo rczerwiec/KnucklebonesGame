@@ -4,6 +4,7 @@ import KnucklebonesPage from "./pages/KnucklebonesPage";
 import { KnucklebonesContext } from "./context/knucklebones";
 import Header from "./components/Header";
 import Rules from "./components/Rules";
+import EndingPanel from "./components/EndingPanel";
 
 function App() {
   const { gameEnded, score, gameStarted } = useContext(KnucklebonesContext);
@@ -11,28 +12,12 @@ function App() {
   let content = <Rules />;
 
   let winnerContent = (
-    <div className="flex border p-2 flex-col items-center text-2xl m-auto">
-      <div className="text-red-500">Player 2 Wins!</div>
-      <div>
-        {score.player2Score}-{score.player1Score}
-      </div>
-      <div>
-        Refresh page to restart
-      </div>
-    </div>
+    <EndingPanel red text="Player 2 Wins"/>
   );
 
   if (score.player1Score > score.player2Score) {
     winnerContent = (
-      <div className="flex border-p2 flex-col items-center text-2xl m-auto">
-        <div className="text-lime-400">Player 1 Wins!</div>
-        <div className="">
-          {score.player2Score}-{score.player1Score}
-        </div>
-        <div>
-        Refresh page to restart
-      </div>
-      </div>
+<EndingPanel green text="Player 1 Wins"/>
     );
   }
 
