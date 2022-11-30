@@ -5,7 +5,7 @@ import { KnucklebonesContext } from "../context/knucklebones";
 
 function KnucklebonesPage() {
   const {
-    gameStatus,
+    gameEnded,
     playerFieldsStatus,
     enemyFieldsStatus,
     turn,
@@ -15,7 +15,7 @@ function KnucklebonesPage() {
   if (!turn) {
     whosNow = <div className="text-red-500 m-auto">Enemy Turn</div>;
   }
-  if (!gameStatus) {
+  if (!gameEnded) {
     whosNow = "";
   }
 

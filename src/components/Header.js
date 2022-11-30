@@ -1,10 +1,8 @@
 function Header() {
 
-  let header = <div className="text-2xl">KNUCKLEBONES</div>
-
   return (
-    <div className="flex justify-center p-5 bg-gray-900">
-      {header}
+    <div className="flex justify-center p-5 bg-black-800 border-b-2 mb-5">
+      <div className="text-2xl ">KNUCKLEBONES</div>
     </div>
   );
 }
