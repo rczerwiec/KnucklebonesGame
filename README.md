@@ -3,6 +3,7 @@
 ## About
 
 This project is a simple dice based game for 2 players on single device.
+Check the game at cloudflare page - https://knucklebonesgame.pages.dev/
 
 ## TechStack
 
