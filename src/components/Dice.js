@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { KnucklebonesContext } from "../context/knucklebones";
+import ClassName from "classnames";
 import One from '../static/svg/dice-six-faces-one.svg'
 import Two from '../static/svg/dice-six-faces-two.svg'
 import Three from '../static/svg/dice-six-faces-three.svg'
@@ -32,11 +33,12 @@ function Dice() {
   else if (diceNumber===5) dice = Five
   else if (diceNumber===6) dice = Six
 
+  const diceClasses = ClassName("m-auto w-20 border rounded-lg cursor-pointer",{'animate-pulse':!diceStatus})
 
   return (
     <div className="flex flex-col m-auto">
       <div>{text}</div>
-    <img onClick={throwDice} className="m-auto w-20 border rounded-lg cursor-pointer" alt={diceNumber} src={dice}></img>
+    <img onClick={throwDice} className={diceClasses} alt={diceNumber} src={dice}></img>
 
     </div>
   );

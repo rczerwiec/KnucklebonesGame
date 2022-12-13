@@ -52,7 +52,7 @@ function Field({ fieldType, id, fields }) {
   };
 
   return (
-    <div onClick={setField} className="border hover:bg-gray-200 cursor-pointer">
+    <div onClick={setField} className="border hover:transition-colors hover:duration-700 hover:bg-gray-200 cursor-pointer">
       {fieldNumber()}
     </div>
   );

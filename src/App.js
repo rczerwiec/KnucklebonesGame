@@ -1,7 +1,8 @@
 import { useContext } from "react";
+import { KnucklebonesContext } from "./context/knucklebones";
+
 import Dice from "./components/Dice";
 import KnucklebonesPage from "./pages/KnucklebonesPage";
-import { KnucklebonesContext } from "./context/knucklebones";
 import Header from "./components/Header";
 import Rules from "./components/Rules";
 import EndingPanel from "./components/EndingPanel";
