@@ -1,8 +1,11 @@
 import { useContext} from "react";
+import { useTranslation } from "react-i18next";
 import Field from "../components/Field";
 import { KnucklebonesContext } from "../context/knucklebones";
 
 function KnucklebonesPage() {
+  const {t,i18n} = useTranslation();
+
   const {
     gameEnded,
     playerFieldsStatus,
@@ -10,9 +13,9 @@ function KnucklebonesPage() {
     turn,
   } = useContext(KnucklebonesContext);
 
-  let whosNow = <div className="text-lime-400 m-auto">Player 1 Turn</div>;
+  let whosNow = <div className="text-lime-400 m-auto">{t('1PlayerTurn')}</div>;
   if (!turn) {
-    whosNow = <div className="text-red-500 m-auto">Player 2 Turn</div>;
+    whosNow = <div className="text-red-500 m-auto">{t('2PlayerTurn')}</div>;
   }
   if (!gameEnded) {
     whosNow = "";
@@ -49,14 +52,14 @@ function KnucklebonesPage() {
   return (
     <div className="flex flex-col justify-center">
       <div className="m-auto">{whosNow}</div>
-      <div className="m-auto text-xl">Player 2</div>
+      <div className="m-auto text-xl">{t('Player2')}</div>
       <div className="grid grid-cols-3 grid-rows-3 m-auto mt-5 mb-5">
         {enemyFields}
       </div>
       <div className="grid grid-cols-3 grid-rows-3 m-auto mt-5 mb-5">
         {playerFields}
       </div>
-      <div className="m-auto text-xl">Player 1</div>
+      <div className="m-auto text-xl">{t('Player1')}</div>
     </div>
   );
 }

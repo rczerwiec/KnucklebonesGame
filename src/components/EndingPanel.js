@@ -1,8 +1,10 @@
 import ClassNames from 'classnames';
 import { useContext } from "react";
+import { useTranslation } from 'react-i18next';
 import { KnucklebonesContext } from "../context/knucklebones";
 
 function EndingPanel({text, red, green}){
+    const {t, i18n} = useTranslation();
     const {score} = useContext(KnucklebonesContext)
     const classes = ClassNames({'text-red-500': red, 'text-lime-400':green})
     
@@ -13,7 +15,7 @@ function EndingPanel({text, red, green}){
       {score.player2Score}-{score.player1Score}
     </div>
     <div>
-      Refresh page to restart
+      {t('refresh_to_restart')}
     </div>
   </div>)
 }

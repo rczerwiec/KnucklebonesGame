@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { KnucklebonesContext } from "../context/knucklebones";
+import { useTranslation } from "react-i18next";
 import ClassName from "classnames";
 import One from '../static/svg/dice-six-faces-one.svg'
 import Two from '../static/svg/dice-six-faces-two.svg'
@@ -9,6 +10,7 @@ import Five from '../static/svg/dice-six-faces-five.svg'
 import Six from '../static/svg/dice-six-faces-six.svg'
 
 function Dice() {
+  const {t, i18n} = useTranslation();
   const { onDiceClick, diceNumber, diceStatus, changeDiceStatus } =
     useContext(KnucklebonesContext);
 
@@ -19,10 +21,10 @@ function Dice() {
     }
   };
 
-  let text = <div className="text-lime-400 m-auto">Throw a Dice!</div>;
+  let text = <div className="text-lime-400 m-auto">{t('throw_dice')}</div>;
 
   if (diceStatus) {
-    text = <div className="text-red-500 m-auto">Make a turn!</div>;
+    text = <div className="text-red-500 m-auto">{t('make_a_turn')}</div>;
   }
 
   let dice = One

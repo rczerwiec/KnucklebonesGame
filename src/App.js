@@ -6,15 +6,17 @@ import KnucklebonesPage from "./pages/KnucklebonesPage";
 import Header from "./components/Header";
 import Rules from "./components/Rules";
 import EndingPanel from "./components/EndingPanel";
+import {useTranslation} from "react-i18next";
 
 function App() {
+  const {t, i18n} = useTranslation();
   const { gameEnded, score, gameStarted } = useContext(KnucklebonesContext);
 
   let content = <Rules />;
-  let winnerContent = <EndingPanel red text="Player 2 Wins" />;
+  let winnerContent = <EndingPanel red text={t('player2_wins')} />;
 
   if (score.player1Score > score.player2Score) {
-    winnerContent = <EndingPanel green text="Player 1 Wins" />;
+    winnerContent = <EndingPanel green text={t('player1_wins')} />;
   }
   
   if (gameStarted) {
