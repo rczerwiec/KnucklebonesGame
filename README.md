@@ -19,7 +19,10 @@ Check the game at cloudflare page - https://knucklebonesgame.pages.dev/
 
 ## Screenshots
 
- Will be added soon
+<img src="/images/startingPage.png" width="800">
+<img src="/images/gamePage.png" width="800">
+<img src="/images/gameplay.png" width="800">
+<img src="/images/results.png" width="800">
 
 ## Available Scripts
 
